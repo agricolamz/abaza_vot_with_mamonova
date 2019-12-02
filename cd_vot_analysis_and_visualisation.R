@@ -48,6 +48,18 @@ df %>%
 data
 
 data %>% 
+  mutate(vot = ifelse(phonation == "voiced", -vot, vot),
+         utterance = str_extract(utterance, "\\d"),
+         utterance = ifelse(is.na(utterance), "cf", utterance)) %>% 
+  filter(utterance != "4",
+         utterance != "5") %>% 
+  ggplot(aes(phonation, vot))+
+  ggbeeswarm::geom_quasirandom(size = 0.5)+
+  facet_grid(utterance~poa)+
+  theme_bw()
+ggsave("vot_phonation_poa.png", device = "png")
+
+data %>% 
   ggplot(aes(cd, vot, label = cons, color = phonation))+
   geom_text()+
   facet_grid(poa~speaker, scales = "free")+
