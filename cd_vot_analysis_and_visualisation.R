@@ -122,6 +122,7 @@ data %>%
   ggplot(aes(cons, number, label = number, fill = utterance))+
   geom_col(position = "dodge")+
   facet_wrap(~speaker)+
-  theme_bw()
-  
+  theme_bw()+
+  labs(x = "consonant", y = "number of consonants in the survey")
+ggsave("cons.png", device = "png")  
   
